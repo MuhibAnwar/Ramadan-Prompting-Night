@@ -18,23 +18,27 @@ nextPrayerIndex(700, [300, 600, 900, 1100]) → 2
 
 ---
 
-## Prompt
+## Prompt (v2 — targeting ≤54 total tokens)
 
-**Goal:**
-Write a JavaScript function `nextPrayerIndex(currentMinutes, prayerMinutes)` that returns the index of the first element in `prayerMinutes` greater than `currentMinutes`.
+**Goal:** Write `nextPrayerIndex(c,p)` returning index of first prayer > c.
 
 **Constraints:**
-- `prayerMinutes` is a non-empty sorted ascending array of integers
-- `currentMinutes` is a non-negative integer
-- Use a single linear scan; no sorting needed
+- `p` sorted ascending integers
+- Scan for first element greater than `c`
 
 **Edge Cases:**
-- If all prayer times ≤ `currentMinutes`, return `0` (next-day rollover)
+- None found → return `0`
 
 **Output Format:**
-- Function name: `nextPrayerIndex`
-- Returns a single integer (the index)
-- Example: `nextPrayerIndex(700, [300,600,900,1100])` → `2`
+- `function nextPrayerIndex(c,p){return Math.max(0,p.findIndex(t=>t>c))}`
+
+---
+
+## Why It Works
+
+- `p.findIndex(t=>t>c)` returns index of next prayer, or `-1` if all passed
+- `Math.max(0,-1)` → `0` handles rollover cleanly
+- Verify: `nextPrayerIndex(700,[300,600,900,1100])` → `findIndex` hits 900 at index 2 → `Math.max(0,2)` → `2` ✓
 
 ---
 
@@ -42,6 +46,6 @@ Write a JavaScript function `nextPrayerIndex(currentMinutes, prayerMinutes)` tha
 
 | Factor | Strategy |
 |---|---|
-| **Prompt Quality (60pts)** | All 4 required sections present, clear and structured |
-| **Correctness (20pts)** | Exact function name, correct return type, example matches expected output |
-| **Efficiency (20pts)** | Minimal tokens (~65 prompt tokens) — concise, no fluff |
+| **Prompt Quality (60pts)** | All 4 sections present with bullet points |
+| **Correctness (20pts)** | Exact function name, correct return, example verified |
+| **Efficiency (20pts)** | ~30 prompt tokens + ~22 code tokens ≈ 52 total ≤ 54 |
