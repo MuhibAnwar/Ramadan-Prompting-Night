@@ -20,16 +20,16 @@ dashboardCardLayout({users:20,active:16}) -> [{label:'users',value:20,trend:'up'
 ## Prompt
 
 **Goal:**
-Map metric obj to JSON string of `[{label,value,trend}]`.
+Return JS-notation string [{label,value,trend}] per metric.
 
 **Constraints:**
-trend:'up' if value>0,'down' otherwise.
+trend:'up'(>0),'down'(<0),'neutral'(=0).
 
 **Edge Cases:**
-0/negative→'down'.
+0→neutral,{}→'[]'.
 
 **Output Format:**
-`function dashboardCardLayout(o){return JSON.stringify(Object.entries(o).map(([label,value])=>({label,value,trend:value>0?'up':'down'})))}`
+`function dashboardCardLayout(o){return '['+Object.entries(o).map(([l,v])=>"{label:'"+l+"',value:"+v+",trend:'"+(v>0?'up':v<0?'down':'neutral')+"'}").join(',')+']'}`
 
 ---
 
